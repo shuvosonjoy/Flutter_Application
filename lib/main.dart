@@ -91,11 +91,11 @@ class HomeScreen extends StatelessWidget {
             height: 180,
             aspectRatio: 16/8,
             viewportFraction: 0.6,
-            //autoPlay:true,
+            autoPlay:true,
             autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(milliseconds: 800),
-           // enlargeCenterPage: true,
-            //enlargeFactor: 0.5,
+           enlargeCenterPage: true,
+            enlargeFactor: 0.5,
             reverse: true,
 
 
