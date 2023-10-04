@@ -10,184 +10,161 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: HomeScreen(),
       debugShowCheckedModeBanner: false,
-      home: TodoPage(),
       theme: ThemeData(primarySwatch: Colors.indigo),
     );
   }
 }
 
-class TodoPage extends StatefulWidget {
-  const TodoPage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<TodoPage> createState() => _TodoPageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _TodoPageState extends State<TodoPage> {
-
-
-  List todolist = [];
+class _HomeScreenState extends State<HomeScreen> {
+  List todoList = [];
   String singlevalue = "";
 
-  addstring(content) {
+  addString(content) {
     setState(() {
       singlevalue = content;
     });
   }
 
-  addlist() {
+  addList() {
     setState(() {
-      todolist.add({"item": singlevalue});
+      todoList.add({"value": singlevalue});
     });
   }
 
-  RemoveItem(index) {
+  deleteItem(index) {
     setState(() {
-      todolist.removeAt(index);
+      todoList.removeAt(index);
     });
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white54,
-        appBar: AppBar(
-        leading: Icon(Icons.menu),
-        elevation: 0,
-        toolbarHeight: 75,
+      appBar: AppBar(
         title: Text(
-          "TodoList App",
+          "Todo Application",
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 25,
             fontWeight: FontWeight.bold,
+            fontSize: 25,
           ),
         ),
         centerTitle: true,
+        toolbarHeight: 75,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {},
+        ),
+        elevation: 0,
       ),
       body: Container(
         margin: EdgeInsets.all(10),
         child: Column(
           children: [
             Expanded(
-                flex: 90,
-                child: ListView.builder(
-                    itemCount: todolist.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        // elevation: 50,
-                        color: Colors.blue[900],
-                        child: SizedBox(
-
-                            height: 50,
-                            width: double.infinity,
-
-                            child:Container(
-                              margin: EdgeInsets.only(left: 20),
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      flex: 8,
-                                      child: Text(
-                                        todolist[index]['item'].toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  Expanded(
-                                    flex: 2,
-                                    child: CircleAvatar(
-
-                                      radius: 30,
-                                      backgroundColor: Colors.white,
-                                      child: TextButton(
-                                        onPressed: () {
-                                          RemoveItem(index);
-                                        },
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.black,
-                                        ),
+              flex: 90,
+              child: ListView.builder(
+                  itemCount: todoList.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      color: Colors.blue[900],
+                      child: SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 20),
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 80,
+                                child: Text(
+                                  todoList[index]['value'].toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                  flex: 20,
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.white,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        deleteItem(index);
+                                      },
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: Colors.black,
                                       ),
                                     ),
-                                  ),
-
-                                ],
-                              ),
-                            )
+                                  )),
+                            ],
+                          ),
                         ),
-                      );
-                    }),
-
-
+                      ),
+                    );
+                  }),
             ),
             Expanded(
                 flex: 10,
-                child: Container(
-                  child: Row(
-                    children: [
-                      Expanded(
-                          flex: 70,
-                          child: Container(
-                            height: 40,
-                            width: double.infinity,
-                            child: TextFormField(
-                              onChanged: (content) {
-                                addstring(content);
-                              },
-
-                        decoration: InputDecoration(
-                          labelText: 'Create Task....',
-                            labelStyle: TextStyle(
-                              color: Colors.indigo[900],
-                              fontWeight: FontWeight.bold
-                            ),
-                            fillColor: Colors.blue[300],
-                            filled: true,
-
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 70,
+                      child: Container(
+                        height: 40,
+                        child: TextFormField(
+                          onChanged: (content) {
+                            addString(content);
+                          },
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              fillColor: Colors.blue[300],
+                              filled: true,
+                              labelText: 'Create Task....',
+                              labelStyle: TextStyle(
+                                color: Colors.indigo[900],
+                                fontWeight: FontWeight.bold,
+                              )),
                         ),
-
-
                       ),
-                          )),
-                       Expanded(
-                           flex: 3,
-                           child: Container(
-
-                           ),
-
-                       ),
-
-                      Expanded(
+                    ),
+                    Expanded(
+                        flex: 3,
+                        child: SizedBox(
+                          width: 5,
+                        )),
+                    Expanded(
                         flex: 27,
-                        child: ElevatedButton(onPressed: (){
-
-
-                          addlist();
-                        },
-                            child:Container(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            addList();
+                          },
+                          child: Container(
                               height: 15,
                               width: double.infinity,
                               alignment: Alignment.center,
-                              child: Text("Button"),
-                            ),
-
-                      ),
-                      ),
-                    ],
-                  ),
-                ),
-            ),
+                              child: Text("Add")),
+                        )),
+                  ],
+                )),
           ],
         ),
       ),
